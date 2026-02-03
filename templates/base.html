@@ -1,30 +1,30 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Tímar</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"></head>
-<body>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" charset="utf-8">
+    <title>Tímar</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"></head>
+  <body>
 
-  <h2>Tímaskrá</h2>
+    <h2>Tímaskrá</h2>
 
-  <nav>
-    <a href="/hours" class="{{ 'active' if active == 'hours' else '' }}">Tímar</a>
-    <a href="/projects" class="{{ 'active' if active == 'projects' else '' }}">Verkefni</a>
-    <a href="/clients" class="{{ 'active' if active == 'clients' else '' }}">Kúnnar</a>
-  </nav>
+    <nav>
+      <a href="/hours" class="{{ 'active' if active == 'hours' else '' }}">Tímar</a>
+      <a href="/projects" class="{{ 'active' if active == 'projects' else '' }}">Verkefni</a>
+      <a href="/clients" class="{{ 'active' if active == 'clients' else '' }}">Kúnnar</a>
+    </nav>
 
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
-  {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
-</body>
-</html>
+  </body>
+  </html>
