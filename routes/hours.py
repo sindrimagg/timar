@@ -12,11 +12,11 @@ def hours():
             client_id=request.form['client_id'],
             project_id=request.form['project_id'],
             date=date.fromisoformat(request.form['date']),
-            hours=float(request.form['hours']),
+            hours=float(request.form['hours'].replace(',','.')),
             description=request.form.get('description')
         ))
         db.session.commit()
-        flash('Hours logged')
+        flash('Tími skráður', 'info')
         return redirect('/hours')
 
     return render_template(

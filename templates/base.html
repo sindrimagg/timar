@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" charset="utf-8">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" charset="utf-8" lang="is">
     <title>Tímar</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"></head>
   <body>
@@ -14,17 +14,15 @@
       <a href="/clients" class="{{ 'active' if active == 'clients' else '' }}">Kúnnar</a>
     </nav>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class=messages>
+      {% for category, message in messages %}
+        <p class="{{ category }} message">{{ message }}</p>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}    
     {% block content %}{% endblock %}
-
   </body>
-  </html>
+</html>

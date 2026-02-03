@@ -16,47 +16,126 @@ body {
 nav {
   border-bottom: 2px solid black;
   padding: 1.5em 1em;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
 }
 
 nav a {
   margin: auto;
   padding: 1em 1em;
   text-decoration: none;
+  border: 1px solid black;
   border-radius: 6px;
   color: black;
-  display: inline-block;
+  background: #eee;
 }
 
 nav a.active {
+  background: #ccc;
+}
+
+nav a:hover {
   background: #ddd;
 }
 
-input, select, textarea, button {
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
   width: 100%;
-  height: 50px;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  display: block;
-  margin: auto;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 0.5em;
+}
+
+
+.row label {
   text-align: center;
 }
 
-label {
-  padding: 1rem 1rem 1rem 0;
-  display: block;
-  margin: auto;
+.row button {
+  flex-basis: 100%;
+  width: 100%;
   text-align: center;
 }
 
+.row * {
+  font-size: 1.2rem;
+  min-height: 50px;
+  align-content: center;
+  border-radius: 5px;
+}
+
+select, input, textarea {
+  text-align: center;
+  text-align-last: center;
+  -webkit-appearance: none;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.message {
+  align-content: center;
+  text-align: center;
+  font-size: 1.2em;
+  margin: 1rem;
+}
+
+.info {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill='%23555' d='M0 0l5 6 5-6z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.8em center;
+  background-size: 0.75em;
+}
 
 button {
   margin: 2em auto;
   background-color: #04AA6D;
+  border: 1px solid #04AA6D;
+  border-radius: 5px;
   color: white;
   cursor: pointer;
   float: right;
+}
+
+button:hover {
+  background-color: #00AA00;
+  border: 1px solid #00AA00;
+}
+
+@media all and (min-width: 600px) {
+  .row { 
+    flex-direction: row; 
+    align-items: baseline;
+    margin-top: 1em;
+  }
+  .row label { 
+    text-align: left; 
+    flex-basis: 25%;
+    width: 100%;
+  }
+  .row * {
+    font-size: 1.2rem;
+    flex-basis: 75%;
+    width: 100%;
+    min-height: 50px;
+  }
 }
 
 table {
@@ -70,9 +149,4 @@ th, td {
   border-bottom: 1px solid #eee;
   padding: 1rem;
   text-align: left;
-}
-
-h3 {
-  text-align: center;
-  margin-top: 2rem;
 }

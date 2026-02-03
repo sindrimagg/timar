@@ -3,6 +3,7 @@
 {% block content %}
 
 <form method="post">
+  <div class="row">
   <label>Kúnni</label>
   <select name="client_id" required>
     <option value="">-- velja kúnna --</option>
@@ -10,11 +11,16 @@
       <option value="{{ c.id }}">{{ c.name }}</option>
     {% endfor %}
   </select>
+  </div>
 
+  <div class="row">
   <label>Lýsing</label>
   <input name="description">
+  </div>
 
+  <div class="row">
   <button>Bæta við verkefni</button>
+  </div>
 </form>
 
 {% if projects %}
