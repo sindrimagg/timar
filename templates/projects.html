@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Projects</h3>
+
+<form method="post">
+  <label>Client</label>
+  <select name="client_id" required>
+    <option value="">-- choose client --</option>
+    {% for c in clients %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Description</label>
+  <input name="description">
+
+  <button>Add project</button>
+</form>
+
+{% if projects %}
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Description</th>
+  </tr>
+  {% for p in projects %}
+  <tr>
+    <td>{{ p.client.name }}</td>
+    <td>{{ p.description or "-" }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No projects yet.</p>
+{% endif %}
+{% endblock %}

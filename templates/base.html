@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Simple Time Tracker</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+    nav a {
+      margin-right: 10px;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: black;
+    }
+    nav a.active {
+      background: #ddd;
+    }
+    form {
+      margin: 16px 0;
+      padding: 12px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+    th, td {
+      border-bottom: 1px solid #eee;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Simple Time Tracker</h2>
+
+  <nav>
+    <a href="/hours" class="{{ 'active' if active == 'hours' else '' }}">Hours</a>
+    <a href="/projects" class="{{ 'active' if active == 'projects' else '' }}">Projects</a>
+    <a href="/clients" class="{{ 'active' if active == 'clients' else '' }}">Clients</a>
+  </nav>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+</body>
+</html>

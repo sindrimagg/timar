@@ -9,6 +9,5 @@ in pkgs.mkShell {
   python -m venv venv
   source venv/bin/activate
   pip3 install Flask Flask-SQLAlchemy
-  python app.py
   echo 'done'";
 }

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Clients</h3>
+
+<form method="post">
+  <label>Client name</label>
+  <input name="name" required>
+  <button>Add client</button>
+</form>
+
+{% if clients %}
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  {% for c in clients %}
+  <tr>
+    <td>{{ c.name }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No clients yet.</p>
+{% endif %}
+{% endblock %}
