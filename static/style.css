@@ -1,0 +1,61 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+nav a {
+  margin-right: 10px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: black;
+}
+
+nav a.active {
+  background: #ddd;
+}
+
+form {
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin-top: 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+}
+
+button {
+  padding: 6px;
+  margin-top: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th, td {
+  border-bottom: 1px solid #eee;
+  padding: 8px;
+  text-align: left;
+}
