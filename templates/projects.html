@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form method="post">
+<form class="container" method="post">
   <div class="row">
   <label>Kúnni</label>
   <select name="client_id" required>
@@ -15,11 +15,11 @@
 
   <div class="row">
   <label>Lýsing</label>
-  <input name="description">
+  <input name="description" required>
   </div>
 
   <div class="row">
-  <button>Bæta við verkefni</button>
+  <button class="post">Bæta við verkefni</button>
   </div>
 </form>
 
@@ -28,11 +28,27 @@
   <tr>
     <th>Kúnni</th>
     <th>Lýsing</th>
+    <th></th>
   </tr>
   {% for p in projects %}
   <tr>
     <td>{{ p.client.name }}</td>
-    <td>{{ p.description or "-" }}</td>
+    <td>{{ p.description }}</td>
+    <td>
+      <div class="column">
+        <form method="POST"
+              action="{{ url_for('projects.delete_item', id=p.id) }}"
+              onsubmit="return confirm('Eyða þessu verkefni?\n {{p.client.name}}\n {{ p.description}}');">
+          <button type="submit" class="delete">Eyða</button>
+        </form>
+        <form 
+              action=""
+              onsumbit="return confirm('Laga?')">
+          <button type="submit" class="edit">Breyta</button>
+        </form>
+      </div>
+    </td>
+
   </tr>
   {% endfor %}
 </table>

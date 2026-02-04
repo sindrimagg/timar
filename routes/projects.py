@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, flash
+from flask import Blueprint, render_template, request, redirect, flash, url_for
 from sqlalchemy import exists
 from extensions import db
-from models import Client, Project
+from models import Client, Project, Hour
 
 bp = Blueprint('projects', __name__)
 
@@ -26,6 +26,20 @@ def projects():
     return render_template(
         'projects.html',
         clients=Client.query.all(),
-        projects=Project.query.all(),
+        projects=sorted(Project.query.all(), key=lambda x: (x.client.name, x.description)),
         active='projects'
     )
+
+@bp.route('/delete/project/<int:id>', methods=['POST', 'GET'])
+def delete_item(id):
+    item = Project.query.get_or_404(id)
+    can_delete = Hour.query.filter_by(project_id=item.id).first() is None
+    print(can_delete)
+    if can_delete:
+        db.session.delete(item)
+        db.session.commit()
+        flash('Verkefni eytt', 'info')
+        return redirect('/projects')
+    else:
+        flash('Ekki er hægt að eyða verkefni því það eru tímar skráðir á það', 'error')
+        return redirect('/projects')

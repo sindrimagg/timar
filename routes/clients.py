@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, flash
 from sqlalchemy import exists
 from extensions import db
-from models import Client
+from models import Client, Project, Hour
 
 bp = Blueprint('clients', __name__)
 

@@ -38,9 +38,21 @@ nav a:hover {
   background: #ddd;
 }
 
-form {
+.container {
   display: flex;
   flex-direction: column;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.column form {
+  display: flex;
+  justify-content: center;
 }
 
 .row {
@@ -51,12 +63,11 @@ form {
   margin-top: 0.5em;
 }
 
-
 .row label {
   text-align: center;
 }
 
-.row button {
+.row .post {
   flex-basis: 100%;
   width: 100%;
   text-align: center;
@@ -104,19 +115,38 @@ select {
   background-size: 0.75em;
 }
 
-button {
-  margin: 2em auto;
+.post {
+  margin: 2rem auto;
+}
+
+.post, .edit {
   background-color: #04AA6D;
   border: 1px solid #04AA6D;
+}
+
+.post, .edit, .delete {
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  float: right;
 }
 
-button:hover {
-  background-color: #00AA00;
-  border: 1px solid #00AA00;
+.edit, .delete {
+  margin: 5px 0;
+}
+
+.post:hover, .edit:hover {
+  background-color: #00aa00;
+  border: 1px solid #00aa00;
+}
+
+.delete {
+  background-color: #AA0000;
+  border: 1px solid #BB0000;
+}
+
+.delete:hover {
+  background-color: #BB0000;
+  border: 1px solid #AA0000;
 }
 
 @media all and (min-width: 600px) {

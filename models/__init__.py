@@ -1,3 +1,1 @@
-from .client import Client
-from .project import Project
-from .hour import Hour
+from .models import Client, Project, Hour

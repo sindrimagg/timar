@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, url_for, redirect
 from extensions import db
 from routes import clients_bp, projects_bp, hours_bp
 
@@ -14,5 +14,9 @@ app.register_blueprint(hours_bp)
 
 with app.app_context():
     db.create_all()
+
+@app.route('/')
+def index():
+    return redirect(url_for('hours.hours'))
 
 app.run(debug=True, host="0.0.0.0", port="5001")

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, jsonify, flash
+from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for
 from datetime import date
 from extensions import db
 from models import Client, Project, Hour
@@ -22,6 +22,7 @@ def hours():
     return render_template(
         'hours.html',
         clients=Client.query.all(),
+        projects=Project.query.all(),
         hours=Hour.query.order_by(Hour.date.desc()).all(),
         today=date.today().isoformat(),
         active='hours'
@@ -32,3 +33,16 @@ def api_projects():
     cid = request.args.get('client_id', type=int)
     projects = Project.query.filter_by(client_id=cid).all()
     return jsonify([{'id': p.id, 'description': p.description} for p in projects])
+
+@bp.route('/edit/<int:id>', methods=['POST', 'GET'])
+def edit_item(id):
+    item = Hour.query.get_or_404(id)
+    return redirect(url_for('hours.hours'))
+
+@bp.route('/delete/hours/<int:id>', methods=['POST', 'GET'])
+def delete_item(id):
+    item = Hour.query.get_or_404(id)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Færslu eytt', 'info')
+    return redirect(url_for('hours.hours'))
