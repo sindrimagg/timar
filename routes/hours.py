@@ -1,15 +1,47 @@
 from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for
-from datetime import date
+from datetime import date, timedelta
 from extensions import db, navs
 from models import Project, Hour, Client
 
 bp = Blueprint('hours', __name__)
 
+def parse_date(date_str):
+    for fmt in ("%Y-%m-%d", "%Y-%m", "%Y"):
+        try:
+            return datetime.strptime(date_str, fmt).date()
+        except ValueError:
+            pass
+    raise ValueError(f"Unsupported date format: {date_str}")
+
 @bp.route('/hours', methods=['GET', 'POST'])
 def hours():
+    clients = Client.query.all()
+
+    client_id = request.args.get('client_id', type=int)
+    project_id = request.args.get('project_id', type=int)
+    start_date = request.args.get('start_date', '')
+    end_date = request.args.get('end_date', '')
+
+    q = Hour.query
+    if not any([client_id, project_id, start_date, end_date]):
+        q = q.filter(Hour.date >= (date.today() - timedelta(weeks=1)))
+    else:
+        if client_id:
+            q = q.filter(Hour.client_id == client_id)
+
+        if project_id:
+            q = q.filter(Hour.project_id == project_id)
+
+        if start_date:
+            q = q.filter(Hour.date >= start_date)
+
+        if end_date:
+            q = q.filter(Hour.date <= end_date)
+
     return render_template(
         'hours.html',
-        hours=Hour.query.order_by(Hour.date.desc()).all(),
+        hours=q.order_by(Hour.date.desc()).all(),
+        clients=clients,
         active='hours',
         navs=navs
     )

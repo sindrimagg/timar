@@ -14,7 +14,6 @@ body {
 }
 
 nav {
-  border-bottom: 2px solid black;
   padding: 1.5em 1em;
   display: flex;
   flex-direction: row;
@@ -42,6 +41,7 @@ nav a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 3rem;
 }
 
 .bar > h2 {
@@ -50,6 +50,7 @@ nav a:hover {
 }
 
 .container {
+  border-top: 2px solid black;
   display: flex;
   flex-direction: column;
 }
@@ -58,12 +59,30 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   align-content: center;
+}
+
+.column * {
+  display: flex;
   justify-content: center;
 }
 
-.column form {
+.query {
   display: flex;
+  border-top: 2px solid black;
+  margin-top: 0.5rem;
+  flex-direction: column;
   justify-content: center;
+}
+
+.query label {
+  text-align: center;
+}
+
+.query * {
+  font-size: 1rem;
+  min-height: 30px;
+  align-content: center;
+  border-radius: 5px;
 }
 
 .row {
@@ -71,6 +90,7 @@ nav a:hover {
   width: 100%;
   justify-content: center;
   flex-direction: column;
+  align-content: center;
   margin-top: 0.5em;
 }
 
@@ -79,8 +99,7 @@ nav a:hover {
 }
 
 .row .post, .row .quit {
-  flex-basis: 95%;
-  width: 100%;
+  flex-basis: 100%;
   text-align: center;
 }
 
@@ -179,8 +198,7 @@ select {
 @media all and (min-width: 600px) {
   .row { 
     flex-direction: row; 
-    align-items: baseline;
-    margin-top: 1em;
+    align-items: center;
   }
   .row label { 
     text-align: left; 
@@ -193,13 +211,23 @@ select {
     width: 100%;
     min-height: 50px;
   }
+
+  .query {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .query * {
+    width: 90%;
+  }
 }
 
 table {
   width: 100%;
   border-top: 2px solid black;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 th, td {

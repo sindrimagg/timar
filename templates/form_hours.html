@@ -16,7 +16,7 @@
 
   <div class="row">
     <label for="date">Dagsetning</label>
-    <input type="date" name="date" id="date" value="{{ item.date if item else today }}" required/>
+    <input type="date" name="date" id="date" value="{{ item.date if item else today }}" required max="{{ today }}"/>
   </div>
 
   <div class="row">

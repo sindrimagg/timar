@@ -2,9 +2,42 @@
 
 {% block content %}
 
-<div class="row">
+<div class="container">
+  <div class="row">
     <a class="post" href="/form_hours">Bæta við færslu</a>
+  </div>
 </div>
+
+<form class="query" method="get">
+  <div class="column">
+    <label for="client" class="">Kúnni</label>
+    <select id="client" name="client_id" onchange="loadProjects()">
+      <option value=""></option>
+      {% for c in clients %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="column">
+    <label for="project">Verkefni</label>
+    <select id="project" name="project_id"></select>
+  </div>
+
+  <div class="column">
+    <label for="date">Byrjun tímabils</label>
+    <input type="date" name="start_date" id="start_date"/>
+  </div>
+
+  <div class="column">
+    <label for="date">Lok tímabils</label>
+    <input type="date" name="end_date" id="end_date"/>
+  </div>
+
+  <div class="column">
+    <button>Sækja</button>
+  </div>
+</form>
 
 {% if hours %}
 <table>
@@ -41,5 +74,33 @@
 {% else %}
 <p>Engir tímar skráðir.</p>
 {% endif %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    loadProjects();
+  }); 
 
+  function loadProjects() {
+    const clientId = document.getElementById('client').value;
+    const projectSelect = document.getElementById('project');  
+    projectSelect.innerHTML = '<option value=""></option>';
+
+    if (!clientId) return;
+
+    fetch('/api/projects?client_id=' + clientId)
+      .then(res => res.json())
+      .then(data => {
+        data
+          .sort((a, b) => a.description.localeCompare(b.description))
+          .forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+            opt.textContent = p.description;
+            {% if item %}
+            if ( p.id == {{ item.project_id }}) { opt.selected = true; }
+            {% endif %}
+            projectSelect.appendChild(opt);
+          });
+      });
+  }
+</script>
 {% endblock %}
