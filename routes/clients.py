@@ -58,6 +58,7 @@ def edit_client(id):
     return render_template(
         'form.html',
         form_type='clients',
+        edit=True,
         item=client,
         clients=clients,
         navs=navs,

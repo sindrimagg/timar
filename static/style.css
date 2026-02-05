@@ -38,6 +38,17 @@ nav a:hover {
   background: #ddd;
 }
 
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bar > h2 {
+  color: orange;
+  font-size: 2rem;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -71,6 +82,11 @@ nav a:hover {
   flex-basis: 100%;
   width: 100%;
   text-align: center;
+}
+
+h1 > a {
+  color: black;
+  text-decoration: none;
 }
 
 a.post {

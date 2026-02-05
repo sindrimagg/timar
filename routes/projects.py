@@ -69,6 +69,7 @@ def edit_project(id):
     return render_template(
         'form.html',
         form_type='projects',
+        edit=True,
         item=project,
         clients=Client.query.all(),
         navs=navs,

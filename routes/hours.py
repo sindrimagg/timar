@@ -43,6 +43,7 @@ def edit(id):
     return render_template(
         'form.html',
         form_type='hours',
+        edit=True,
         item=item,
         clients=Client.query.all(),
         projects=sorted(Project.query.all(), key=lambda x: (x.client.name, x.description)),
