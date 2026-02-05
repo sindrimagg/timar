@@ -1,31 +1,17 @@
 from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for
 from datetime import date
-from extensions import db
-from models import Client, Project, Hour
+from extensions import db, navs
+from models import Project, Hour, Client
 
 bp = Blueprint('hours', __name__)
 
 @bp.route('/hours', methods=['GET', 'POST'])
 def hours():
-    if request.method == 'POST':
-        db.session.add(Hour(
-            client_id=request.form['client_id'],
-            project_id=request.form['project_id'],
-            date=date.fromisoformat(request.form['date']),
-            hours=float(request.form['hours'].replace(',','.')),
-            description=request.form.get('description')
-        ))
-        db.session.commit()
-        flash('Tími skráður', 'info')
-        return redirect('/hours')
-
     return render_template(
         'hours.html',
-        clients=Client.query.all(),
-        projects=Project.query.all(),
         hours=Hour.query.order_by(Hour.date.desc()).all(),
-        today=date.today().isoformat(),
-        active='hours'
+        active='hours',
+        navs=navs
     )
 
 @bp.route('/api/projects')
@@ -34,11 +20,6 @@ def api_projects():
     projects = Project.query.filter_by(client_id=cid).all()
     return jsonify([{'id': p.id, 'description': p.description} for p in projects])
 
-@bp.route('/edit/<int:id>', methods=['POST', 'GET'])
-def edit_item(id):
-    item = Hour.query.get_or_404(id)
-    return redirect(url_for('hours.hours'))
-
 @bp.route('/delete/hours/<int:id>', methods=['POST', 'GET'])
 def delete_item(id):
     item = Hour.query.get_or_404(id)
@@ -46,3 +27,24 @@ def delete_item(id):
     db.session.commit()
     flash('Færslu eytt', 'info')
     return redirect(url_for('hours.hours'))
+
+@bp.route('/edit/hours/<int:id>', methods=['GET','POST'])
+def edit(id):
+    item = Hour.query.get_or_404(id)
+    if request.method == 'POST':
+        item.client_id=request.form['client_id']
+        item.project_id=request.form['project_id']
+        item.date=date.fromisoformat(request.form['date'])
+        item.hours=float(request.form['hours'].replace(',','.'))
+        item.description=request.form.get('description')
+        db.session.commit()
+        flash('Færsla uppfærð', 'info')
+        return redirect('/hours')
+    return render_template(
+        'form.html',
+        form_type='hours',
+        item=item,
+        clients=Client.query.all(),
+        projects=sorted(Project.query.all(), key=lambda x: (x.client.name, x.description)),
+        navs=navs,
+    )

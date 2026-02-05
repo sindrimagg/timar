@@ -73,6 +73,10 @@ nav a:hover {
   text-align: center;
 }
 
+a.post {
+  text-decoration: none;
+}
+
 .row * {
   font-size: 1.2rem;
   min-height: 50px;

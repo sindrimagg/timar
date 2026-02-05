@@ -1,0 +1,64 @@
+<form class="container" method="post">
+  <div class="row">
+    <label for="client" class="">Kúnni</label>
+    <select id="client" name="client_id" required onchange="loadProjects()">
+      <option value="">-- velja kúnna --</option>
+      {% for c in clients %}
+      <option value="{{ c.id }}" {% if c.id == item.client_id %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="row">
+    <label for="project">Verkefni</label>
+    <select id="project" name="project_id" required data-selected="{{ item.project_id if item else ""}}"></select>
+  </div>
+
+  <div class="row">
+    <label for="date">Dagsetning</label>
+    <input type="date" name="date" id="date" value="{{ item.date if item else today }}" required/>
+  </div>
+
+  <div class="row">
+    <label for="hours">Klukkustundir</label>
+    <input type="text" pattern="[0-9]*[.,]?[0-9]*" id="hours" step="0.01" name="hours" inputmode="decimal" value="{{ item.hours if item else ''}}" required lang="is"/>
+  </div>
+
+  <div class="row">
+    <label for="description">Lýsing</label>
+    <textarea name="description" id="description">{{ item.description if item else '' }}</textarea>
+  </div>
+
+  <div class="row">
+    <button class="post">Vista færslu</button>
+  </div>
+</form>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    loadProjects();
+  }); 
+
+  function loadProjects() {
+    const clientId = document.getElementById('client').value;
+    const projectSelect = document.getElementById('project');  
+    projectSelect.innerHTML = '<option value="">-- velja verkefni --</option>';
+
+    if (!clientId) return;
+
+    fetch('/api/projects?client_id=' + clientId)
+      .then(res => res.json())
+      .then(data => {
+        data
+          .sort((a, b) => a.description.localeCompare(b.description))
+          .forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+            opt.textContent = p.description;
+            {% if item %}
+            if ( p.id == {{ item.project_id }}) { opt.selected = true; }
+            {% endif %}
+            projectSelect.appendChild(opt);
+          });
+      });
+  }
+</script>

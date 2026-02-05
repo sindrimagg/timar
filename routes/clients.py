@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, flash
 from sqlalchemy import exists
-from extensions import db
+from extensions import db, navs
 from models import Client, Project, Hour
 
 bp = Blueprint('clients', __name__)
@@ -22,5 +22,6 @@ def clients():
     return render_template(
         'clients.html',
         clients=Client.query.all(),
-        active='clients'
+        active='clients',
+        navs=navs
     )

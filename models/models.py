@@ -1,4 +1,5 @@
 from extensions import db
+from sqlalchemy import UniqueConstraint
 
 class Hour(db.Model):
     __tablename__ = 'hours'
@@ -22,6 +23,10 @@ class Project(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable=False)
-    description = db.Column(db.String(500))
+    description = db.Column(db.String(500), nullable=False)
 
+    __table_args__ = (
+        UniqueConstraint('client_id', 'description', name='uq_client_description'),
+    )
     client = db.relationship('Client', backref='projects')
+

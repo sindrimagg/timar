@@ -11,9 +11,9 @@
     <h2>Tímaskrá</h2>
 
     <nav>
-      <a href="/hours" class="{{ 'active' if active == 'hours' else '' }}">Tímar</a>
-      <a href="/projects" class="{{ 'active' if active == 'projects' else '' }}">Verkefni</a>
-      <a href="/clients" class="{{ 'active' if active == 'clients' else '' }}">Kúnnar</a>
+      {% for nav in navs %}
+      <a href="/{{ nav }}" class="{{ 'active' if active == nav else '' }}">{{ navs[nav] }}</a>
+      {% endfor %}
     </nav>
 
     {% with messages = get_flashed_messages(with_categories=true) %}

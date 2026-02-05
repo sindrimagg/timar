@@ -2,41 +2,9 @@
 
 {% block content %}
 
-<form class="container" method="post">
-  <div class="row">
-    <label for="client" class="">Kúnni</label>
-    <select id="client" name="client_id" required onchange="loadProjects()">
-      <option value="">-- velja kúnna --</option>
-      {% for c in clients %}
-      <option value="{{ c.id }}">{{ c.name }}</option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div class="row">
-    <label for="project">Verkefni</label>
-    <select id="project" name="project_id" required></select>
-  </div>
-
-  <div class="row">
-    <label for="date">Dagsetning</label>
-    <input type="date" name="date" id="date" value="{{ today }}" required/>
-  </div>
-
-  <div class="row">
-    <label for="hours">Klukkustundir</label>
-    <input type="text" pattern="[0-9]*[.,]?[0-9]*" id="hours" step="0.01" name="hours" inputmode="decimal" required lang="is"/>
-  </div>
-
-  <div class="row">
-    <label for="description">Lýsing</label>
-    <textarea name="description" id="description"></textarea>
-  </div>
-
-  <div class="row">
-    <button class="post">Vista færslu</button>
-  </div>
-</form>
+<div class="row">
+    <a class="post" href="/form_hours">Bæta við færslu</a>
+</div>
 
 {% if hours %}
 <table>
@@ -62,9 +30,7 @@
               onsubmit="return confirm('Eyða þessari færslu?\n {{h.date}}\n {{h.client.name}}\n {{ h.project.description}}\n {{h.hours}}\n {{h.description}}');">
           <button type="submit" class="delete">Eyða</button>
         </form>
-        <form 
-              action=""
-              onsumbit="return confirm('Laga?')">
+        <form  action="{{ url_for('hours.edit', id=h.id) }}">
           <button type="submit" class="edit">Breyta</button>
         </form>
       </div>
@@ -76,36 +42,4 @@
 <p>Engir tímar skráðir.</p>
 {% endif %}
 
-<script>
-  function loadProjects() {
-    const clientId = document.getElementById('client').value;
-    const projectSelect = document.getElementById('project');
-    projectSelect.innerHTML = '';
-
-    if (!clientId) return;
-
-    fetch('/api/projects?client_id=' + clientId)
-      .then(res => res.json())
-      .then(data => {
-        data
-          .sort((a, b) => a.description.localeCompare(b.description))
-          .forEach(p => {
-            const opt = document.createElement('option');
-            opt.value = p.id;
-            opt.textContent = p.description;
-            projectSelect.appendChild(opt);
-          });
-      });
-    //fetch('/api/projects?client_id=' + clientId)
-    //  .then(res => res.json())
-    //  .then(data => {
-    //    data.forEach(p => {
-    //      const opt = document.createElement('option');
-    //      opt.value = p.id;
-    //      opt.textContent = p.description;
-    //      projectSelect.appendChild(opt);
-    //    });
-    //  });
-  }
-</script>
 {% endblock %}
