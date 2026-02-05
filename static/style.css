@@ -69,7 +69,7 @@ nav a:hover {
 .row {
   display: flex;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
   margin-top: 0.5em;
 }
@@ -78,8 +78,8 @@ nav a:hover {
   text-align: center;
 }
 
-.row .post {
-  flex-basis: 100%;
+.row .post, .row .quit {
+  flex-basis: 95%;
   width: 100%;
   text-align: center;
 }
@@ -141,8 +141,8 @@ select {
   background-size: 0.75em;
 }
 
-.post {
-  margin: 2rem auto;
+.post, .quit {
+  margin: 1rem 0.5rem;
 }
 
 .post, .edit {
@@ -150,7 +150,7 @@ select {
   border: 1px solid #04AA6D;
 }
 
-.post, .edit, .delete {
+.post, .quit, .edit, .delete {
   border-radius: 5px;
   color: white;
   cursor: pointer;
@@ -165,12 +165,13 @@ select {
   border: 1px solid #00aa00;
 }
 
-.delete {
+.delete, .quit {
+  text-decoration: none;
   background-color: #AA0000;
   border: 1px solid #BB0000;
 }
 
-.delete:hover {
+.delete:hover, .quit:hover {
   background-color: #BB0000;
   border: 1px solid #AA0000;
 }

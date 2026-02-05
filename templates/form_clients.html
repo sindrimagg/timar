@@ -4,6 +4,7 @@
     <input name="name" required value="{% if item %}{{item.name}}{% endif %}">
   </div>
   <div class="row">
+    {% if edit %}<a href="/clients" class="quit">Hætta við</a>{% endif %} 
     <button class="post">Vista kúnna</button>
   </div>
 </form>
