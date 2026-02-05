@@ -1,0 +1,20 @@
+<form class="container" method="post">
+  <div class="row">
+  <label>Kúnni</label>
+  <select name="client_id" required>
+      <option value="">-- velja kúnna --</option>
+      {% for c in clients %}
+      <option value="{{ c.id }}" {% if c.id == item.client_id %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+  </select>
+  </div>
+
+  <div class="row">
+  <label>Lýsing</label>
+  <textarea class="autogrow" name="description" required>{{ item.description if item else '' }}</textarea>
+  </div>
+
+  <div class="row">
+  <button class="post">Vista verkefni</button>
+  </div>
+</form>

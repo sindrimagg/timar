@@ -4,4 +4,15 @@
 
 {% include 'form_' ~ form_type ~ '.html' %}
 
+<script>
+  // autogrow textarea
+  const textarea = document.querySelector('.autogrow');
+  function updateTextareaHeight() {
+    textarea.style.height = `${textarea.scrollHeight + 2}px`;
+  }
+
+  textarea.addEventListener('input', updateTextareaHeight);
+
+  updateTextareaHeight();
+</script>
 {% endblock %}

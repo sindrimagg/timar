@@ -2,26 +2,7 @@
 
 {% block content %}
 
-<form class="container" method="post">
-  <div class="row">
-  <label>Kúnni</label>
-  <select name="client_id" required>
-    <option value="">-- velja kúnna --</option>
-    {% for c in clients %}
-      <option value="{{ c.id }}">{{ c.name }}</option>
-    {% endfor %}
-  </select>
-  </div>
-
-  <div class="row">
-  <label>Lýsing</label>
-  <input name="description" required>
-  </div>
-
-  <div class="row">
-  <button class="post">Bæta við verkefni</button>
-  </div>
-</form>
+{% include "form_projects.html" %}
 
 {% if projects %}
 <table>
@@ -37,13 +18,12 @@
     <td>
       <div class="column">
         <form method="POST"
-              action="{{ url_for('projects.delete_item', id=p.id) }}"
+              action="{{ url_for('projects.delete_project', id=p.id) }}"
               onsubmit="return confirm('Eyða þessu verkefni?\n {{p.client.name}}\n {{ p.description}}');">
           <button type="submit" class="delete">Eyða</button>
         </form>
-        <form 
-              action=""
-              onsumbit="return confirm('Laga?')">
+        <form method="POST"
+              action="{{ url_for('projects.edit_project', id=p.id) }}">
           <button type="submit" class="edit">Breyta</button>
         </form>
       </div>

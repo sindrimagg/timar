@@ -84,6 +84,12 @@ a.post {
   border-radius: 5px;
 }
 
+textarea {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: unset;
+}
+
 select, input, textarea {
   text-align: center;
   text-align-last: center;
