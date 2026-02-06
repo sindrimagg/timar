@@ -6,31 +6,35 @@
 
 {% if projects %}
 <table>
-  <tr>
-    <th>Kúnni</th>
-    <th>Lýsing</th>
-    <th></th>
-  </tr>
-  {% for p in projects %}
-  <tr>
-    <td>{{ p.client.name }}</td>
-    <td>{{ p.description }}</td>
-    <td>
-      <div class="column">
-        <form method="POST"
-              action="{{ url_for('projects.delete_project', id=p.id) }}"
-              onsubmit="return confirm('Eyða þessu verkefni?\n {{p.client.name}}\n {{ p.description}}');">
-          <button type="submit" class="delete">Eyða</button>
-        </form>
-        <form method="POST"
-              action="{{ url_for('projects.edit_project', id=p.id) }}">
-          <button type="submit" class="edit">Breyta</button>
-        </form>
-      </div>
-    </td>
+  <thead>
+    <tr>
+      <th class="data-label">Kúnni</th>
+      <th class="data-label">Lýsing</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in projects %}
+    <tr>
+      <td data-label="Kúnni">{{ p.client.name }}</td>
+      <td data-label="Lýsing">{{ p.description }}</td>
+      <td>
+        <div class="last">
+          <form method="POST"
+                action="{{ url_for('projects.delete_project', id=p.id) }}"
+                onsubmit="return confirm('Eyða þessu verkefni?\n {{p.client.name}}\n {{ p.description}}');">
+            <button type="submit" class="delete">Eyða</button>
+          </form>
+          <form method="POST"
+                action="{{ url_for('projects.edit_project', id=p.id) }}">
+            <button type="submit" class="edit">Breyta</button>
+          </form>
+        </div>
+      </td>
 
-  </tr>
-  {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 {% else %}
 <p>Engin verkefni.</p>

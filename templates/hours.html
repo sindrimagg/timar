@@ -14,7 +14,7 @@
     <select id="client" name="client_id" onchange="loadProjects()">
       <option value=""></option>
       {% for c in clients %}
-      <option value="{{ c.id }}">{{ c.name }}</option>
+      <option value="{{ c.id }}" {% if c.id == query[0] %}selected{% endif %}>{{ c.name }}</option>
       {% endfor %}
     </select>
   </div>
@@ -26,38 +26,41 @@
 
   <div class="column">
     <label for="date">Byrjun tímabils</label>
-    <input type="date" name="start_date" id="start_date"/>
+    <input type="date" name="start_date" id="start_date" value="{{ query[2] }}"/>
   </div>
 
   <div class="column">
     <label for="date">Lok tímabils</label>
-    <input type="date" name="end_date" id="end_date"/>
+    <input type="date" name="end_date" id="end_date" value="{{ query[3] }}"/>
   </div>
 
-  <div class="column">
-    <button>Sækja</button>
+  <div class="column last">
+    <button class="get">Sækja</button>
   </div>
 </form>
 
 {% if hours %}
-<table>
+<table class="rwd-table">
+  <thead>
   <tr>
-    <th>Dagsetning</th>
-    <th>Kúnni</th>
-    <th>Verkefni</th>
-    <th>Klst.</th>
-    <th>Lýsing</th>
-    <th></th>
+    <th class="data-label">Dags.</th>
+    <th class="data-label">Kúnni</th>
+    <th class="data-label">Verkefni</th>
+    <th class="data-label">Klst.</th>
+    <th class="data-label">Lýsing</th>
+    <th class="last"><a href="/download" class="save">Vista</a></th>
   </tr>
+  </thead>
+  <tbody>
   {% for h in hours %}
   <tr>
-    <td>{{ h.date }}</td>
-    <td>{{ h.client.name }}</td>
-    <td>{{ h.project.description or "-" }}</td>
-    <td>{{ h.hours }}</td>
-    <td>{{ h.description or "-" }}</td>
+    <td data-label="Dags.">{{ h.date }}</td>
+    <td data-label="Kúnni">{{ h.client.name }}</td>
+    <td data-label="Verkefni">{{ h.project.description or "-" }}</td>
+    <td data-label="Klst.">{{ h.hours }}</td>
+    <td data-label="Lýsing">{{ h.description or "-" }}</td>
     <td>
-      <div class="column">
+      <div class="last">
         <form method="POST"
               action="{{ url_for('hours.delete_item', id=h.id) }}"
               onsubmit="return confirm('Eyða þessari færslu?\n {{h.date}}\n {{h.client.name}}\n {{ h.project.description}}\n {{h.hours}}\n {{h.description}}');">
@@ -70,6 +73,7 @@
     </td>
   </tr>
   {% endfor %}
+  </tbody>
 </table>
 {% else %}
 <p>Engir tímar skráðir.</p>
@@ -95,8 +99,8 @@
             const opt = document.createElement('option');
             opt.value = p.id;
             opt.textContent = p.description;
-            {% if item %}
-            if ( p.id == {{ item.project_id }}) { opt.selected = true; }
+            {% if query[1] %}
+            if ( p.id == {{ query[1] }}) { opt.selected = true; }
             {% endif %}
             projectSelect.appendChild(opt);
           });

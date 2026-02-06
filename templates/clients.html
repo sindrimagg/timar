@@ -6,26 +6,31 @@
 
 {% if clients %}
 <table>
-  <tr>
-    <th>Nafn</th>
-    <th></th>
-  </tr>
-  {% for c in clients %}
-  <tr>
-    <td>{{ c.name }}</td>
-    <td>
-      <div class="column">
-        <form method="POST"
-              action="{{ url_for('clients.delete_client', id=c.id) }}"
-              onsubmit="return confirm('Eyða þessum kúnna?\n {{ c.name }}');">
-          <button type="submit" class="delete">Eyða</button>
-        </form>
-        <form  action="{{ url_for('clients.edit_client', id=c.id) }}">
-          <button type="submit" class="edit">Breyta</button>
-        </form>
-      </div>
-    </td> </tr>
+  <thead>
+    <tr>
+      <th class="data-label">Nafn</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in clients %}
+    <tr>
+      <td data-label="Nafn">{{ c.name }}</td>
+      <td>
+        <div class="last">
+          <form method="POST"
+                action="{{ url_for('clients.delete_client', id=c.id) }}"
+                onsubmit="return confirm('Eyða þessum kúnna?\n {{ c.name }}');">
+            <button type="submit" class="delete">Eyða</button>
+          </form>
+          <form  action="{{ url_for('clients.edit_client', id=c.id) }}">
+            <button type="submit" class="edit">Breyta</button>
+          </form>
+        </div>
+      </td> 
+    </tr>
     {% endfor %}
+  </tbody>
 </table>
 {% else %}
 <p>Engir kúnnar.</p>

@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for
+from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for, send_file
 from datetime import date, timedelta
 from extensions import db, navs
 from models import Project, Hour, Client
+import csv
 
 bp = Blueprint('hours', __name__)
 
@@ -22,8 +23,10 @@ def hours():
     start_date = request.args.get('start_date', '')
     end_date = request.args.get('end_date', '')
 
+    query = [client_id, project_id, start_date, end_date]
+
     q = Hour.query
-    if not any([client_id, project_id, start_date, end_date]):
+    if not any(query):
         q = q.filter(Hour.date >= (date.today() - timedelta(weeks=1)))
     else:
         if client_id:
@@ -38,10 +41,19 @@ def hours():
         if end_date:
             q = q.filter(Hour.date <= end_date)
 
+    with open("files/query.csv", "w") as csv_file:
+        writer = csv.writer(csv_file)
+        header = ['Dagsetning', 'Kúnni', 'Verkefni', 'Tímar', 'Lýsing']
+        writer.writerow(header)
+        for data in q.order_by(Hour.date.asc()):
+            writer.writerow([str(data.date), data.client.name, data.project.description, str(data.hours), data.description])
+
+
     return render_template(
         'hours.html',
         hours=q.order_by(Hour.date.desc()).all(),
         clients=clients,
+        query=query,
         active='hours',
         navs=navs
     )
@@ -81,3 +93,7 @@ def edit(id):
         projects=sorted(Project.query.all(), key=lambda x: (x.client.name, x.description)),
         navs=navs,
     )
+
+@bp.route('/download')
+def download():
+    return send_file("files/query.csv", as_attachment=True, download_name="timar.csv")
