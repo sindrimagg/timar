@@ -275,6 +275,7 @@ td::before {
 }
 
 td:last-child {
+  display: flex;
   border-bottom: 0;
 }
 
