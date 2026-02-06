@@ -80,6 +80,7 @@ def edit(id):
         item.project_id=request.form['project_id']
         item.date=date.fromisoformat(request.form['date'])
         item.hours=float(request.form['hours'].replace(',','.'))
+        item.call=request.form.get('call') == 'on'
         item.description=request.form.get('description')
         db.session.commit()
         flash('Færsla uppfærð', 'info')
