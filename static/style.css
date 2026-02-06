@@ -151,11 +151,12 @@ textarea {
   overflow-x: unset;
 }
 
-select, input, textarea {
+select, input:not([type="checkbox"]), textarea {
   text-align: center;
   text-align-last: center;
   -webkit-appearance: none;
   cursor: pointer;
+  border: 2px solid black;
 }
 
 .messages {
@@ -186,6 +187,16 @@ select {
   background-position: right 0.2em center;
   background-size: 0.75em;
   padding-right: 1em;
+}
+
+.checkmark {
+  cursor: pointer;
+  width: 50px;
+  border: 2px solid black;
+}
+
+.checkbox-container {
+  text-align: center;
 }
 
 .post, .quit {
@@ -302,7 +313,7 @@ div.last {
     width: 100%;
   }
 
-  .row * {
+  .row > * {
     font-size: 1.2rem;
     flex-basis: 75%;
     width: 100%;

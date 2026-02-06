@@ -9,11 +9,13 @@ bp = Blueprint('forms', __name__)
 @bp.route('/form_hours', methods=['GET', 'POST'])
 def form_hours():
     if request.method == 'POST':
+        print(request.form.get('call'))
         db.session.add(Hour(
             client_id=request.form['client_id'],
             project_id=request.form['project_id'],
             date=date.fromisoformat(request.form['date']),
             hours=float(request.form['hours'].replace(',','.')),
+            call=request.form.get('call') == 'on',
             description=request.form.get('description')
         ))
         db.session.commit()

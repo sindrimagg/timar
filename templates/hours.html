@@ -58,12 +58,13 @@
     <td data-label="Kúnni">{{ h.client.name }}</td>
     <td data-label="Verkefni">{{ h.project.description or "-" }}</td>
     <td data-label="Klst.">{{ h.hours }}</td>
+    <td data-label="Útkall">{% if h.call %}Já{% else %}Nei{% endif %}</td>
     <td data-label="Lýsing">{{ h.description or "-" }}</td>
     <td>
       <div class="last">
         <form method="POST"
               action="{{ url_for('hours.delete_item', id=h.id) }}"
-              onsubmit="return confirm('Eyða þessari færslu?\n {{h.date}}\n {{h.client.name}}\n {{ h.project.description}}\n {{h.hours}}\n {{h.description}}');">
+              onsubmit="return confirm('Eyða þessari færslu?\n {{h.date}}\n {{h.client.name}}\n {{ h.project.description}}\n {{h.hours}}\n {% if h.call %}Útkall{%else%}Ekki útkall{% endif %}\n {{h.description}}');">
           <button type="submit" class="delete">Eyða</button>
         </form>
         <form  action="{{ url_for('hours.edit', id=h.id) }}">

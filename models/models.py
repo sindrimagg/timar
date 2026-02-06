@@ -8,6 +8,7 @@ class Hour(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
     date = db.Column(db.Date, nullable=False)
     hours = db.Column(db.Float, nullable=False)
+    call = db.Column(db.Boolean, default=False)
     description = db.Column(db.String(1000))
 
     client = db.relationship('Client', backref='hours')
